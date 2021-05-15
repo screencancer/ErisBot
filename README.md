@@ -1,0 +1,2 @@
+# ErisBot
+Discord bot
