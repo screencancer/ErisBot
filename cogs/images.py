@@ -113,6 +113,5 @@ class Image(commands.Cog):
             await ctx.message.channel.send(file=discord.File(fp=image_binary, filename='podium.png'))
 
 
-
 def setup(client):
     client.add_cog(Image(client))
