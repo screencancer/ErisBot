@@ -58,7 +58,7 @@ class Countdown(commands.Cog):
                 break
             if seconds <= 0:
                 break
-            await asyncio.sleep(5)
+            await asyncio.sleep(60)
             cur_date = dt.datetime.now(Tz[timezone1])
             aware_date = date.astimezone(Tz[timezone1])
             diff = aware_date - cur_date.replace(microsecond=0)
