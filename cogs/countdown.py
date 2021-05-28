@@ -56,6 +56,8 @@ class Countdown(commands.Cog):
             print(cancelled)
             if cancelled == 1:
                 break
+            if seconds <= 0:
+                break
             await asyncio.sleep(5)
             cur_date = dt.datetime.now(Tz[timezone1])
             aware_date = date.astimezone(Tz[timezone1])
