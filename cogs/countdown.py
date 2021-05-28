@@ -28,14 +28,15 @@ class Countdown(commands.Cog):
         self.client = client
 
     @commands.command()
-    async def settime(self, ctx, eventname, month, day, year, time2, timezone1):
+    async def settime(self, ctx, eventname, time1, time2, timezone1):
         h, m = time2.split(':')
         m = int(m)
         h = int(h)
+        month, day, year = time1.split('/')
         month = int(month)
         day = int(day)
         year = int(year)
-        datetimeFormat = '%Y-%m-%d %H:%M:%S'
+        # datetimeFormat = '%Y-%m-%d %H:%M:%S'
         # timezoneend = pytz.timezone(Tz[timezone1])
         date = dt.datetime(year, month, day, h, m,)
         cur_date = dt.datetime.now(Tz[timezone1])
@@ -56,7 +57,7 @@ class Countdown(commands.Cog):
             print(cancelled)
             if cancelled == 1:
                 break
-            if seconds <= 0:
+            if seconds <= 0 and minutes <= 0 and hours <= 0 and days <= 0:
                 break
             await asyncio.sleep(60)
             cur_date = dt.datetime.now(Tz[timezone1])
