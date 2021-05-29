@@ -32,17 +32,22 @@ class Countdown(commands.Cog):
         h, m = time2.split(':')
         m = int(m)
         h = int(h)
+
         month, day, year = time1.split('/')
         month = int(month)
         day = int(day)
         year = int(year)
+
         # datetimeFormat = '%Y-%m-%d %H:%M:%S'
         # timezoneend = pytz.timezone(Tz[timezone1])
+
         date = dt.datetime(year, month, day, h, m,)
         cur_date = dt.datetime.now(Tz[timezone1])
         cur_date.replace(microsecond=0)
+
         print(cur_date)
         print(date)
+
         aware_date = date.astimezone(Tz[timezone1])
         aware_date.replace(microsecond=0)
 
@@ -59,10 +64,13 @@ class Countdown(commands.Cog):
                 break
             if seconds <= 0 and minutes <= 0 and hours <= 0 and days <= 0:
                 break
+
             await asyncio.sleep(60)
+
             cur_date = dt.datetime.now(Tz[timezone1])
             aware_date = date.astimezone(Tz[timezone1])
             diff = aware_date - cur_date.replace(microsecond=0)
+
             days, hours, minutes, seconds = diff.days, diff.seconds // 3600, diff.seconds % 3600 / 60.0, diff.seconds % 60
             await time.edit(content = f'{eventname} Countdown \nDays left: {int(days)} \nHours left: {int(hours)} \nMinutes left: {int(minutes)} \n Seconds left: {seconds}')
 
