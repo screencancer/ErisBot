@@ -59,10 +59,18 @@ class Countdown(commands.Cog):
         global cancelled
         cancelled = 0
         while diff.seconds != 0 & cancelled == 0:
-            print(cancelled)
             if cancelled == 1:
                 break
             if seconds <= 0 and minutes <= 0 and hours <= 0 and days <= 0:
+                break
+            if days < 0:
+                days = 0
+                minutes = 0
+                hours = 0
+                seconds = 0
+                await time.edit(
+                    content=f'{eventname} Countdown \nDays left: {int(days)} \nHours left: {int(hours)} \nMinutes left: {int(minutes)} \n Seconds left: {seconds}')
+                print("Stopping")
                 break
 
             await asyncio.sleep(60)
