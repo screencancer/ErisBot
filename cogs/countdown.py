@@ -28,7 +28,7 @@ class Countdown(commands.Cog):
         self.client = client
 
     @commands.command()
-    async def settime(self, ctx, eventname, time1, time2, timespecifier, timezone1):
+    async def countdown(self, ctx, eventname, time1, time2, timespecifier, timezone1):
         h, m = time2.split(':')
         m = int(m)
         h = int(h)
