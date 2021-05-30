@@ -28,11 +28,19 @@ class Countdown(commands.Cog):
         self.client = client
 
     @commands.command()
-    async def settime(self, ctx, eventname, time1, time2, timezone1):
+    async def settime(self, ctx, eventname, time1, time2, timespecifier, timezone1):
         h, m = time2.split(':')
         m = int(m)
         h = int(h)
 
+        if timespecifier == 'PM':
+            if h == 12:
+                h -= 12
+            h += 12
+            print(h)
+        if timespecifier == 'AM':
+            if h == 12:
+                h -= 12
         month, day, year = time1.split('/')
         month = int(month)
         day = int(day)
@@ -53,11 +61,12 @@ class Countdown(commands.Cog):
 
         diff = aware_date-cur_date.replace(microsecond=0)
         print(diff)
-        days, hours, minutes,seconds = diff.days, diff.seconds // 3600, diff.seconds % 3600 / 60.0, diff.seconds % 60
+        days, hours, minutes, seconds = diff.days, diff.seconds // 3600, diff.seconds % 3600 / 60.0, diff.seconds % 60
         print(seconds)
         time = await ctx.send(f'{eventname} Countdown \nDays left: {int(days)} \nHours left: {int(hours)} \nMinutes left: {int(minutes)} \n Seconds left: {seconds}')
         global cancelled
         cancelled = 0
+
         while diff.seconds != 0 & cancelled == 0:
             if cancelled == 1:
                 break
@@ -68,8 +77,7 @@ class Countdown(commands.Cog):
                 minutes = 0
                 hours = 0
                 seconds = 0
-                await time.edit(
-                    content=f'{eventname} Countdown \nDays left: {int(days)} \nHours left: {int(hours)} \nMinutes left: {int(minutes)} \n Seconds left: {seconds}')
+                await time.edit(content=f'{eventname} Countdown \nDays left: {int(days)} \nHours left: {int(hours)} \nMinutes left: {int(minutes)} \n Seconds left: {seconds}')
                 print("Stopping")
                 break
 
@@ -77,9 +85,11 @@ class Countdown(commands.Cog):
 
             cur_date = dt.datetime.now(Tz[timezone1])
             aware_date = date.astimezone(Tz[timezone1])
+
             diff = aware_date - cur_date.replace(microsecond=0)
 
             days, hours, minutes, seconds = diff.days, diff.seconds // 3600, diff.seconds % 3600 / 60.0, diff.seconds % 60
+
             await time.edit(content = f'{eventname} Countdown \nDays left: {int(days)} \nHours left: {int(hours)} \nMinutes left: {int(minutes)} \n Seconds left: {seconds}')
 
     @commands.command()
