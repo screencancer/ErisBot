@@ -9,7 +9,13 @@ from pytz import timezone
 from pytz import common_timezones
 from discord.ext import commands
 from getpass import getpass
-from mysql.connector import connect, Error
+import sqlite3
+
+conn = sqlite3.connect("database.db")
+
+cursor = conn.cursor()
+
+
 
 cId = 0
 cancelled = 0
@@ -74,6 +80,9 @@ class Countdown(commands.Cog):
             date = dt.datetime(year, month, day, h, m, )
             cur_date = dt.datetime.now(Tz[timezone1])
             cur_date.replace(microsecond=0)
+
+            Command = """INSERT INTO users (year, Months, Days, Hours, Minutes, TimeSpecifier, Timezone) 
+            values (?, ?, ?, ?, ?, ?, ?)""",(year, month,day,hours,m, timespecifier)
 
             print(cur_date)
             print(date)
