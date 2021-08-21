@@ -8,10 +8,15 @@ from datetime import timedelta
 from pytz import timezone
 from pytz import common_timezones
 from discord.ext import commands
+from getpass import getpass
+from mysql.connector import connect, Error
+
 cId = 0
 cancelled = 0
 
 timers = {}
+timers2 = {}
+timers3 = {}
 Tz = {
     'PST': timezone('America/Los_Angeles'),
     'CEST': timezone('Europe/Berlin'),
@@ -32,15 +37,20 @@ class Countdown(commands.Cog):
     @commands.command()
     async def countdown(self, ctx, eventname, time1, time2, timespecifier, timezone1):
         serverID = ctx.guild.id
+        chanID = ctx.channel.id
+        msgID = ctx.message.id
 
-        if serverID in timers and timers[serverID]:
+        print(serverID)
+        print(chanID)
+
+        if chanID in timers3 and timers3[chanID]:
             await ctx.send('A timer has already begun.')
             return
 
-        timers[serverID] = True
+        timers3[chanID] = True
 
         # Then you add your timer logic
-        while timers[serverID]:
+        while timers3[chanID]:
             h, m = time2.split(':')
             m = int(m)
             h = int(h)
@@ -80,7 +90,7 @@ class Countdown(commands.Cog):
             global cancelled
             cancelled = 0
 
-            while diff.seconds != 0 & cancelled == 0 and timers[serverID]:
+            while diff.seconds != 0 & cancelled == 0 and timers3[chanID]:
                 if cancelled == 1:
                     break
                 if seconds <= 0 and minutes <= 0 and hours <= 0 and days <= 0:
@@ -108,17 +118,21 @@ class Countdown(commands.Cog):
                     content=f'{eventname} Countdown \nDays left: {int(days)} \nHours left: {int(hours)} \nMinutes left: {int(minutes)} \n Seconds left: {seconds}')
 
         # After coming out of the loop, it would be a good idea to delete it from the dictionary
-        del timers[serverID]
+
+        del timers3[chanID]
 
     @commands.command()
     async def stop(self, ctx):
         serverID = ctx.guild.id
+        chanID = ctx.channel.id
+        msgID = ctx.message.id
 
-        if serverID not in timers:
-            await ctx.send('There is no active countdown in this server.')
+        if chanID not in timers3:
+            await ctx.send('There is no active countdown in this channel/server.')
             return
 
-        timers[serverID] = False
+        #timers[serverID] = False
+        timers3[chanID] = False
         await ctx.send("Stopping timer")
 
 
