@@ -53,4 +53,4 @@ async def help(ctx):
     embed1.add_field(name="Random", value=".8ball Example question here",inline=False)
     await ctx.send(embed=embed1)
 
-client.run('***REMOVED***')
+client.run('Hidden')
