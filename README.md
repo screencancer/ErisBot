@@ -10,6 +10,8 @@ In this project I learned many libraries and learned to plan out projects before
 This project will hopefully store all values in countdown persistently in an SQL database eventually. 
 
 Features: 
--Countdown to events that users can make. 
+
+-Countdown to events that users can make.
+
 -Image generation using avatars of the users mentioned in the user input command that were obtained using the discord API.
 
