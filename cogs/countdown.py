@@ -1,15 +1,9 @@
-import time
 import pytz
 import datetime as dt
-import discord
 import asyncio
 
-from datetime import timedelta
 from pytz import timezone
-from pytz import common_timezones
 from discord.ext import commands
-from getpass import getpass
-from mysql.connector import connect, Error
 
 cId = 0
 cancelled = 0
@@ -23,11 +17,6 @@ Tz = {
     'EST': timezone('America/New_York'),
     'UTC': pytz.utc
 }
-# UTC = pytz.utc
-# CEST = timezone('Europe/Berlin')
-# PST = timezone('America/Los_Angeles')
-# EST = timezone('America/New_York')
-# print(CEST.zone, UTC.zone, PST.zone, EST.zone)
 
 
 class Countdown(commands.Cog):
@@ -117,7 +106,7 @@ class Countdown(commands.Cog):
                 await time.edit(
                     content=f'{eventname} Countdown \nDays left: {int(days)} \nHours left: {int(hours)} \nMinutes left: {int(minutes)} \n Seconds left: {seconds}')
 
-        # After coming out of the loop, it would be a good idea to delete it from the dictionary
+        # After coming out of the loop delete timers from the dictionary
 
         del timers3[chanID]
 
@@ -131,7 +120,6 @@ class Countdown(commands.Cog):
             await ctx.send('There is no active countdown in this channel/server.')
             return
 
-        #timers[serverID] = False
         timers3[chanID] = False
         await ctx.send("Stopping timer")
 
