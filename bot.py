@@ -2,14 +2,14 @@ import discord
 import os
 import logging
 from dotenv import load_dotenv
+from discord.ext import commands, tasks
+from itertools import cycle
+
 
 load_dotenv()
 
 bot_token = os.getenv("DISCORD_API_TOKEN")
 
-
-from discord.ext import commands, tasks
-from itertools import cycle
 
 intents = discord.Intents(messages=True, guilds=True, reactions=True, members=True, presences=True)
 client = commands.Bot(command_prefix='.', intents=intents, help_command=None)
@@ -40,6 +40,7 @@ async def change_status():
 @client.command()
 async def load(ctx, extension):
     client.load_extension(f'cogs.{extension}')
+    print("Entered Load")
     await ctx.send(f'{extension} loaded')
 
 
@@ -53,18 +54,21 @@ async def unload(ctx, extension):
 async def reload(ctx, extension):
     client.unload_extension(f'cogs.{extension}')
     client.load_extension(f'cogs.{extension}')
+    print("Entered Reload")
     await ctx.send(f'{extension} reloaded')
 
 
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
+        print(f'cogs.{filename[:-3]}')
     else:
         continue
 
 
 @client.command()
 async def help(ctx):
+    print("Entered Help")
     embed1 = discord.Embed(title="Help", description="Commands with Example usage",color=0x00ff00)
     embed1.add_field(name="Countdown", value=".countdown Example_Name 5/31/2021 12:56 AM PST\n .stop(stops countdown)", inline=False)
     embed1.add_field(name="Image Generation", value=".jail @user\n.podium @1stUser @2ndUser @3rdUser\n.slap @user",inline=False)
