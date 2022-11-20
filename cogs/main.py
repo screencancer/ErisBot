@@ -35,5 +35,5 @@ class Main(commands.Cog):
         await ctx.send(f'Question: {question} \nAnswer: {random.choice(responses)}')
 
 
-def setup(client):
-    client.add_cog(Main(client))
+async def setup(client):
+    await client.add_cog(Main(client))

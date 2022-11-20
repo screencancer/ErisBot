@@ -12,5 +12,5 @@ class Example(commands.Cog):
         await ctx.send(f'Pong {round(self.client.latency  * 1000)} ms')
 
 
-def setup(client):
-    client.add_cog(Example(client))
+async def setup(client):
+    await client.add_cog(Example(client))

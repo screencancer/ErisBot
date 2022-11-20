@@ -124,5 +124,5 @@ class Countdown(commands.Cog):
         await ctx.send("Stopping timer")
 
 
-def setup(client):
-    client.add_cog(Countdown(client))
+async def setup(client):
+    await client.add_cog(Countdown(client))

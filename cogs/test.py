@@ -1,5 +1,7 @@
 import discord
 from discord.ext import commands
+from discord import app_commands
+
 
 class Test(commands.Cog):
 
@@ -11,5 +13,7 @@ class Test(commands.Cog):
         await ctx.send('test')
 
 
-def setup(client):
-    client.add_cog(Test(client))
+async def setup(client):
+    await client.add_cog(Test(client))
+
+

@@ -18,9 +18,9 @@ class Image(commands.Cog):
     async def slap(self, ctx, member : discord.Member):
         batslap = discord.File('./cogs/ImageFolder/batslap.png')
         id = ctx.message.author
-        pfp = id.avatar_url
+        pfp = id.avatar.url
         size = 350, 350
-        mentionedpfp = member.avatar_url
+        mentionedpfp = member.avatar.url
 
         mask = PIL.Image.new('L', size, 0)
         draw = ImageDraw.Draw(mask)
@@ -49,7 +49,7 @@ class Image(commands.Cog):
         size = 750,  750
         jailimg = jailimg.resize(size)
 
-        pfp = member.avatar_url
+        pfp = member.avatar.url
         img2 = PIL.Image.open(requests.get(pfp, stream=True).raw)
 
         img2 = img2.convert('RGBA')
@@ -85,9 +85,9 @@ class Image(commands.Cog):
         draw = ImageDraw.Draw(mask)
         draw.ellipse((0, 0) + size, fill=255)
 
-        pfp1 = member1.avatar_url
-        pfp2 = member2.avatar_url
-        pfp3 = member3.avatar_url
+        pfp1 = member1.avatar.url
+        pfp2 = member2.avatar.url
+        pfp3 = member3.avatar.url
 
         img1 = PIL.Image.open(requests.get(pfp1, stream=True).raw)
         img2 = PIL.Image.open(requests.get(pfp2, stream=True).raw)
@@ -111,5 +111,5 @@ class Image(commands.Cog):
             await ctx.message.channel.send(file=discord.File(fp=image_binary, filename='podium.png'))
 
 
-def setup(client):
-    client.add_cog(Image(client))
+async def setup(client):
+    await client.add_cog(Image(client))
